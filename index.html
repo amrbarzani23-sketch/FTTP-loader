@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox Cloud Gaming</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #05050a;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+    p {
+      color: #b19cd9;
+      font-size: 15px;
+      margin-bottom: 30px;
+    }
+    .launch-btn {
+      background: #107C41;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 18px 45px;
+      border: 3px solid #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(16, 124, 65, 0.9);
+      text-decoration: none;
+      display: inline-block;
+    }
+    /* GoldHEN System Style Popup (Top-Left) */
+    #ps4-notification {
+      position: fixed;
+      top: 20px;
+      left: -400px;
+      background: rgba(20, 24, 30, 0.95);
+      border-left: 5px solid #107C41;
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 6px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.9);
+      z-index: 999;
+      font-size: 14px;
+      transition: left 0.3s ease-in-out;
+    }
+    #ps4-notification b {
+      color: #107C41;
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GoldHEN System Style Popup -->
+  <div id="ps4-notification">
+    <b>GoldHEN MS Boost Loaded</b>
+    Latency locked ~60ms • RAM Stabilized
+  </div>
+
+  <div>
+    <h1>PSBox Cloud Gaming</h1>
+    <p>Handcrafted Native Web Wrapper v1.20 • 60ms Target Route</p>
+    <a href="https://www.xbox.com/play" class="launch-btn" id="xBtn" onclick="triggerBoost(event)">Press X to Load Boost & Play</a>
+  </div>
+
+  <script>
+    window.onload = function() {
+      document.getElementById("xBtn").focus();
+    };
+
+    function triggerBoost(e) {
+      e.preventDefault();
+      var notif = document.getElementById("ps4-notification");
+      notif.style.left = "20px"; // Slide in notification
+      
+      setTimeout(function() {
+        window.location.href = "https://www.xbox.com/play";
+      }, 1600);
+    }
+  </script>
+</body>
+</html>
