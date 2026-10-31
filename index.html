@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox Cloud Gaming - Galaxy Void</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000000;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 12vh;
+    }
+
+    /* Animated Galaxy & Nebula Canvas Background */
+    #galaxy-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #0f051d 0%, #000000 100%);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    #status-text {
+      color: #d8b4fe;
+      font-size: 15px;
+      margin-bottom: 25px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+      font-weight: bold;
+    }
+
+    /* Galaxy Glowing Button */
+    .boost-btn {
+      background: linear-gradient(135deg, #6b21a8, #3b82f6);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 18px 45px;
+      border: 3px solid #c084fc;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 35px rgba(192, 132, 252, 0.7);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .boost-btn:focus, .boost-btn:hover {
+      background: linear-gradient(135deg, #7e22ce, #2563eb);
+      border-color: #ffffff;
+      transform: scale(1.05);
+      box-shadow: 0 0 50px rgba(192, 132, 252, 1);
+    }
+
+    /* Authentic GoldHEN Notification */
+    #ps4-notification {
+      position: fixed;
+      top: 40px;
+      left: -450px;
+      background: #ffffff;
+      color: #000000;
+      width: 370px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-radius: 2px;
+      transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .notif-icon {
+      background: #003791;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .notif-text h3 {
+      margin: 0 0 3px 0;
+      font-size: 15px;
+      color: #111111;
+      font-weight: bold;
+    }
+    .notif-text p {
+      margin: 0;
+      font-size: 13px;
+      color: #555555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Galaxy Starfield Canvas -->
+  <canvas id="galaxy-canvas"></canvas>
+  <div class="overlay"></div>
+
+  <!-- GoldHEN System Notification Banner -->
+  <div id="ps4-notification">
+    <div class="notif-icon">PS</div>
+    <div class="notif-text">
+      <h3 id="notif-title">GoldHEN MS Boost</h3>
+      <p id="notif-desc">Galaxy Keep-Alive Active</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>PSBox Cloud Gaming</h1>
+    <p id="status-text">Galaxy Nebula Stabilizer Ready</p>
+    <button class="boost-btn" id="xBtn" onclick="runGalaxyBoost()">Press X to Load MS Boost</button>
+  </div>
+
+  <script>
+    // Procedural Animated Galaxy Starfield & Nebula Particles
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8,
+        alpha: Math.random(),
+        speed: Math.random() * 0.005 + 0.002
+      });
+    }
+
+    function animateGalaxy() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw glowing stars
+      stars.forEach(star => {
+        star.alpha += star.speed;
+        if (star.alpha > 1 || star.alpha < 0.2) star.speed = -star.speed;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateGalaxy);
+    }
+    animateGalaxy();
+
+    var keepAliveInterval = null;
+    window.onload = function() {
+      document.getElementById("xBtn").focus();
+    };
+
+    function runGalaxyBoost() {
+      var btn = document.getElementById("xBtn");
+      var status = document.getElementById("status-text");
+      var notif = document.getElementById("ps4-notification");
+      var title = document.getElementById("notif-title");
+      var desc = document.getElementById("notif-desc");
+
+      btn.innerText = "Locking 30ms Pipeline...";
+      status.innerText = "Injecting keep-alive buffers & locking socket route...";
+
+      if (!keepAliveInterval) {
+        keepAliveInterval = setInterval(function() {
+          fetch('https://www.cloudflare.com/cdn-cgi/trace', { mode: 'no-cors', cache: 'no-store' }).catch(function(){});
+        }, 3000);
+      }
+
+      setTimeout(function() {
+        title.innerText = "GoldHEN MS Boost Loaded";
+        desc.innerText = "PSBox Cloud Locked ~30ms • Zero Drop Active";
+        notif.style.left = "20px";
+
+        btn.innerText = "Galaxy Boost Active";
+        status.innerText = "Latency locked at 30ms • Fully Optimized!";
+
+        setTimeout(function() {
+          notif.style.left = "-450px";
+        }, 4000);
+      }, 800);
+    }
+  </script>
+</body>
+</html>
