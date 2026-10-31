@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox MS Boost</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #05050a url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* Authentic GoldHEN / PS4 System Notification Banner */
+    #ps4-notification {
+      position: fixed;
+      top: 40px;
+      right: -450px; /* Start hidden off-screen to the right */
+      background: #ffffff;
+      color: #000000;
+      width: 360px;
+      padding: 18px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-radius: 2px;
+      transition: right 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .notif-icon {
+      background: #003791;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+
+    .notif-text h3 {
+      margin: 0 0 4px 0;
+      font-size: 15px;
+      color: #333333;
+      font-weight: bold;
+    }
+
+    .notif-text p {
+      margin: 0;
+      font-size: 13px;
+      color: #555555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Native GoldHEN Notification Box -->
+  <div id="ps4-notification">
+    <div class="notif-icon">PS</div>
+    <div class="notif-text">
+      <h3>MS Boost Loaded</h3>
+      <p>Target Latency: ~60ms Locked</p>
+    </div>
+  </div>
+
+  <script>
+    // Automatically trigger notification slide-in and redirect on load
+    window.onload = function() {
+      var notif = document.getElementById("ps4-notification");
+      
+      // Slide notification in from the right like real PS4 system alerts
+      setTimeout(function() {
+        notif.style.right = "40px";
+      }, 200);
+
+      // Redirect into cloud gaming after the notification displays
+      setTimeout(function() {
+        window.location.href = "https://www.xbox.com/play";
+      }, 1800);
+    };
+  </script>
+</body>
+</html>
