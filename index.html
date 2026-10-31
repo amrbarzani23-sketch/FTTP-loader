@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox MS Boost</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: sans-serif;
+    }
+    /* GoldHEN System Style Popup (Top-Left) */
+    #ps4-notification {
+      position: fixed;
+      top: 20px;
+      left: -400px;
+      background: rgba(20, 24, 30, 0.95);
+      border-left: 5px solid #107C41;
+      color: #ffffff;
+      padding: 16px 26px;
+      border-radius: 6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      z-index: 999;
+      font-size: 15px;
+      transition: left 0.3s ease-in-out;
+    }
+    #ps4-notification b {
+      color: #107C41;
+      display: block;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GoldHEN System Style Popup -->
+  <div id="ps4-notification">
+    <b>GoldHEN MS Boost Loaded</b>
+    Latency locked ~60ms • RAM Stabilized
+  </div>
+
+  <script>
+    // Automatically trigger the GoldHEN notification and launch immediately on load
+    window.onload = function() {
+      var notif = document.getElementById("ps4-notification");
+      
+      // Slide in notification instantly like a system payload
+      setTimeout(function() {
+        notif.style.left = "20px";
+      }, 100);
+
+      // Redirect into cloud gaming after the notification pops
+      setTimeout(function() {
+        window.location.href = "https://www.xbox.com/play";
+      }, 1500);
+    };
+  </script>
+</body>
+</html>
