@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox Cloud Gaming</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000000 url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Authentic White GoldHEN System Notification Banner */
+    #ps4-notification {
+      position: fixed;
+      top: 40px;
+      left: -450px; /* Start hidden off-screen to the left */
+      background: #ffffff;
+      color: #000000;
+      width: 360px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-radius: 2px;
+      transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .notif-icon {
+      background: #003791;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .notif-text h3 {
+      margin: 0 0 3px 0;
+      font-size: 15px;
+      color: #111111;
+      font-weight: bold;
+    }
+    .notif-text p {
+      margin: 0;
+      font-size: 13px;
+      color: #555555;
+    }
+
+    /* PSBox L1+X Menu HUD */
+    #mod-menu {
+      position: fixed;
+      background: rgba(15, 18, 24, 0.95);
+      border: 2px solid #107C41;
+      border-radius: 8px;
+      padding: 20px 30px;
+      width: 340px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(16, 124, 65, 0.6);
+      z-index: 1000;
+      display: block; /* Visible by default or toggle with L1+X */
+    }
+    #mod-menu h2 {
+      margin: 0 0 5px 0;
+      color: #107C41;
+      font-size: 22px;
+    }
+    #mod-menu p {
+      margin: 0 0 20px 0;
+      color: #aaaaaa;
+      font-size: 13px;
+    }
+    .menu-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      margin: 8px 0;
+      background: #1a202c;
+      color: white;
+      border: 2px solid #2d3748;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .menu-btn:focus, .menu-btn:hover {
+      background: #107C41;
+      border-color: #ffffff;
+      outline: none;
+    }
+    .hint-text {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #718096;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GoldHEN Style Notification Popup -->
+  <div id="ps4-notification">
+    <div class="notif-icon">PS</div>
+    <div class="notif-text">
+      <h3 id="notif-title">GoldHEN MS Boost</h3>
+      <p id="notif-msg">Latency locked!</p>
+    </div>
+  </div>
+
+  <!-- PSBox L1+X Overlay Menu -->
+  <div id="mod-menu">
+    <h2>PSBox Cloud Menu</h2>
+    <p>Press [L1 + X] anytime to toggle menu</p>
+
+    <button class="menu-btn" id="btn30" onclick="selectLatency('30ms')">⚡ 30ms Extreme Boost</button>
+    <button class="menu-btn" id="btn60" onclick="selectLatency('60ms')">🚀 60ms Balanced Boost</button>
+    
+    <div class="hint-text">Use DualShock D-Pad & X to Select</div>
+  </div>
+
+  <script>
+    var l1Pressed = false;
+
+    // Automatically highlight the 30ms button on start
+    window.onload = function() {
+      document.getElementById("btn30").focus();
+    };
+
+    // Controller shortcut detection (L1 + X)
+    window.addEventListener("keydown", function(e) {
+      // PS4 L1 button keycode is usually 227, 76 (L), or L1 mapped
+      if (e.key === "L1" || e.keyCode === 76 || e.keyCode === 227) {
+        l1Pressed = true;
+      }
+      // If L1 is held and X (Enter / keycode 13 / 88) is pressed
+      if (l1Pressed && (e.keyCode === 13 || e.key === "x" || e.key === "X")) {
+        toggleMenu();
+      }
+    });
+
+    window.addEventListener("keyup", function(e) {
+      if (e.key === "L1" || e.keyCode === 76 || e.keyCode === 227) {
+        l1Pressed = false;
+      }
+    });
+
+    function toggleMenu() {
+      var menu = document.getElementById("mod-menu");
+      if (menu.style.display === "none") {
+        menu.style.display = "block";
+        document.getElementById("btn30").focus();
+      } else {
+        menu.style.display = "none";
+      }
+    }
+
+    function selectLatency(ms) {
+      var notif = document.getElementById("ps4-notification");
+      var title = document.getElementById("notif-title");
+      var msg = document.getElementById("notif-msg");
+
+      title.innerText = "GoldHEN MS Boost Loaded";
+      msg.innerText = "Latency locked: " + ms + " • Network Optimized";
+
+      // Slide GoldHEN notification out from the left
+      notif.style.left = "20px";
+
+      // Hide notification and launch Xbox Cloud Gaming
+      setTimeout(function() {
+        notif.style.left = "-450px";
+        window.location.href = "https://www.xbox.com/play";
+      }, 1600);
+    }
+  </script>
+</body>
+</html>
