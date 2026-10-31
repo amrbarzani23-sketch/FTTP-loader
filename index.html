@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox Cloud Gaming</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #05050a url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 8vh;
+      color: white;
+      overflow: hidden;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 1;
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      letter-spacing: 1px;
+    }
+    p {
+      color: #b19cd9;
+      font-size: 15px;
+      margin-bottom: 25px;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.8);
+    }
+    .launch-btn {
+      background: #107C41;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 18px 45px;
+      border: 3px solid #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(16, 124, 65, 0.9);
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s;
+    }
+    .launch-btn:focus, .launch-btn:hover {
+      background: #0e6d39;
+      transform: scale(1.04);
+      outline: none;
+    }
+    /* GoldHEN Style Notification Pop-up */
+    #goldhen-toast {
+      position: fixed;
+      top: -80px;
+      right: 30px;
+      background: rgba(16, 20, 24, 0.95);
+      border-left: 5px solid #107C41;
+      color: #ffffff;
+      padding: 15px 25px;
+      border-radius: 4px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+      z-index: 10;
+      font-size: 14px;
+      transition: top 0.4s ease-in-out;
+    }
+    #goldhen-toast b {
+      color: #107C41;
+      display: block;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="content">
+    <h1>PSBox Cloud Gaming</h1>
+    <p>Handcrafted Native Web Wrapper v1.20 • 60ms Target Route</p>
+    <a href="https://www.xbox.com/play" class="launch-btn" id="xBtn" onclick="triggerBoost(event)">Press X to Load Boost & Play</a>
+  </div>
+
+  <!-- GoldHEN Notification Box -->
+  <div id="goldhen-toast">
+    <b>Boost Loaded Successfully!</b>
+    RAM stabilized • Target Ping: ~60ms locked
+  </div>
+
+  <script>
+    // Automatically focus button for PS4 controller
+    window.onload = function() {
+      document.getElementById("xBtn").focus();
+    };
+
+    function triggerBoost(e) {
+      e.preventDefault();
+      var toast = document.getElementById("goldhen-toast");
+      toast.style.top = "30px"; // Slide down like GoldHEN notification
+      
+      setTimeout(function() {
+        window.location.href = "https://www.xbox.com/play";
+      }, 1500); // Show notification for 1.5s then launch stream
+    }
+  </script>
+</body>
+</html>
