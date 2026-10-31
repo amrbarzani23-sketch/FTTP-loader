@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PSBox Cloud Gaming</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000000;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 12vh;
+    }
+
+    /* High-Detail Animated Galaxy Canvas */
+    #galaxy-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background: radial-gradient(circle at center, #1b0c3f 0%, #05020a 60%, #000000 100%);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%);
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 25px rgba(192, 132, 252, 0.9);
+      color: #ffffff;
+      letter-spacing: 1.5px;
+    }
+
+    #status-text {
+      color: #d8b4fe;
+      font-size: 15px;
+      margin-bottom: 25px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+      font-weight: bold;
+    }
+
+    /* Ultra-HD Glowing Button */
+    .boost-btn {
+      background: linear-gradient(135deg, #7e22ce, #2563eb);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 18px 45px;
+      border: 3px solid #e9d5ff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.9);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .boost-btn:focus, .boost-btn:hover {
+      background: linear-gradient(135deg, #9333ea, #3b82f6);
+      border-color: #ffffff;
+      transform: scale(1.05);
+      box-shadow: 0 0 55px rgba(233, 213, 255, 1);
+    }
+
+    /* Authentic GoldHEN Notification */
+    #ps4-notification {
+      position: fixed;
+      top: 40px;
+      left: -450px;
+      background: #ffffff;
+      color: #000000;
+      width: 370px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-radius: 2px;
+      transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .notif-icon {
+      background: #003791;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .notif-text h3 {
+      margin: 0 0 3px 0;
+      font-size: 15px;
+      color: #111111;
+      font-weight: bold;
+    }
+    .notif-text p {
+      margin: 0;
+      font-size: 13px;
+      color: #555555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- High-Detail Moving Galaxy Canvas -->
+  <canvas id="galaxy-canvas"></canvas>
+  <div class="overlay"></div>
+
+  <!-- GoldHEN System Notification Banner -->
+  <div id="ps4-notification">
+    <div class="notif-icon">PS</div>
+    <div class="notif-text">
+      <h3 id="notif-title">GoldHEN MS Boost</h3>
+      <p id="notif-desc">Activating 30ms Cloud Stream...</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>PSBox Cloud Gaming</h1>
+    <p id="status-text">Deep Space Nebula Stabilizer Ready</p>
+    <button class="boost-btn" id="xBtn" onclick="launchCloudWithBoost()">Press X to Load MS Boost</button>
+  </div>
+
+  <script>
+    // High-Detail Procedural Galaxy, Nebula Dust & Star Animation Engine
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let nebulae = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Generate dense star field with varying sizes and depths
+    for (let i = 0; i < 300; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2.2,
+        alpha: Math.random(),
+        speed: Math.random() * 0.015 + 0.003,
+        twinkleSpeed: Math.random() * 0.02
+      });
+    }
+
+    // Generate swirling nebula cloud particles
+    for (let i = 0; i < 25; i++) {
+      nebulae.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 250 + 100,
+        color: i % 2 === 0 ? 'rgba(147, 51, 234, 0.08)' : 'rgba(37, 99, 235, 0.08)',
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+      });
+    }
+
+    function renderGalaxy() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Render moving nebula clouds
+      nebulae.forEach(n => {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < -200) n.x = canvas.width + 200;
+        if (n.x > canvas.width + 200) n.x = -200;
+        if (n.y < -200) n.y = canvas.height + 200;
+        if (n.y > canvas.height + 200) n.y = -200;
+
+        let grad = ctx.createRadialGradient(n.x, n.y, 10, n.x, n.y, n.radius);
+        grad.addColorStop(0, n.color);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Render glowing, twinkling stars
+      stars.forEach(star => {
+        star.alpha += star.twinkleSpeed;
+        if (star.alpha > 1 || star.alpha < 0.2) star.twinkleSpeed = -star.twinkleSpeed;
+        
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(renderGalaxy);
+    }
+    renderGalaxy();
+
+    window.onload = function() {
+      document.getElementById("xBtn").focus();
+    };
+
+    function launchCloudWithBoost() {
+      var btn = document.getElementById("xBtn");
+      var status = document.getElementById("status-text");
+      var notif = document.getElementById("ps4-notification");
+      var title = document.getElementById("notif-title");
+      var desc = document.getElementById("notif-desc");
+
+      btn.innerText = "Locking 30ms Route...";
+      status.innerText = "Applying GoldHEN network patches & launching stream...";
+
+      title.innerText = "GoldHEN MS Boost Loaded";
+      desc.innerText = "Target Latency: ~30ms Locked • Launching Stream";
+      notif.style.left = "20px";
+
+      // Instantly load Xbox Cloud Gaming stream with the boost applied
+      setTimeout(function() {
+        window.location.href = "https://www.xbox.com/play";
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
