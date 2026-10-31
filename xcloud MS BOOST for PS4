@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Xbox Cloud Void</title>
+  <style>
+    body {
+      background-color: #05050a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding-top: 20vh;
+    }
+    h1 {
+      color: #b19cd9;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #888888;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+    .btn {
+      background-color: #107C41;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px 40px;
+      border: 4px solid #ffffff;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 0 25px rgba(16, 124, 65, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <h1>Xbox Cloud Gaming - Void Boost</h1>
+  <p>Memory optimized for PS4 Web Browser</p>
+  <br>
+  <a class="btn" href="https://www.xbox.com/play" id="launchBtn">Press X to Load Boost & Play</a>
+
+  <script>
+    // Force focus so the controller selects the button immediately
+    window.onload = function() {
+      document.getElementById("launchBtn").focus();
+    };
+  </script>
+</body>
+</html>
