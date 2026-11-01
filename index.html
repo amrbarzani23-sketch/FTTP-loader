@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PSBox Roblox Cloud Hub</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000000;
+      overflow: hidden;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #galaxy-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      background: radial-gradient(circle at center, #11072b 0%, #05020a 70%, #000000 100%);
+    }
+
+    .dashboard {
+      position: relative;
+      z-index: 2;
+      width: 85%;
+      max-width: 900px;
+      background: rgba(15, 10, 25, 0.85);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.25);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+      color: #d8b4fe;
+      text-shadow: 0 0 15px rgba(216, 180, 254, 0.5);
+    }
+
+    p {
+      color: #a78bfa;
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    .btn-grid {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .launch-btn {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .launch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hidden Performance Menu Overlay (Triggered by pressing 'X' / Cross 3 times) */
+    #perf-menu {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-box {
+      background: #120b24;
+      border: 2px solid #7c3aed;
+      padding: 30px;
+      border-radius: 12px;
+      width: 450px;
+      text-align: left;
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+    }
+
+    .menu-box h2 {
+      margin-top: 0;
+      color: #22c55e;
+      font-size: 20px;
+    }
+
+    .menu-option {
+      margin: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+    }
+
+    .close-tip {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="galaxy-canvas"></canvas>
+
+  <!-- Main Roblox Hub Dashboard -->
+  <div class="dashboard">
+    <h1>PSBox Roblox Cloud Portal</h1>
+    <p>Log in with your real Roblox account and play via cloud streaming on your PS4.</p>
+    
+    <div class="btn-grid">
+      <!-- Direct link to web cloud gaming platforms that host Roblox -->
+      <a href="https://now.gg/" class="launch-btn" target="_blank">Launch Roblox (Now.gg Cloud)</a>
+      <a href="https://www.xbox.com/play" class="launch-btn secondary-btn" target="_blank">Xbox Cloud Gaming Hub</a>
+    </div>
+    <p style="margin-top: 20px; font-size: 12px; color: #6b7280;">Tip: Press Controller 'X' (Cross) button 3 times quickly to open the FPS & MS Boost Menu.</p>
+  </div>
+
+  <!-- Secret Performance / FPS Menu -->
+  <div id="perf-menu">
+    <div class="menu-box">
+      <h2>⚡ PSBox Advanced Performance Menu</h2>
+      <div class="menu-option"><span>Target FPS Lock:</span> <strong>60 FPS (Boosted)</strong></div>
+      <div class="menu-option"><span>Network Buffer (MS):</span> <strong>Optimized (~30ms)</strong></div>
+      <div class="menu-option"><span>Resolution Scaling:</span> <strong>720p HD Stream</strong></div>
+      <div class="menu-option"><span>Hardware Acceleration:</span> <strong style="color: #22c55e;">ACTIVE</strong></div>
+      <div class="close-tip">Press 'X' three times again to close this menu.</div>
+    </div>
+  </div>
+
+  <script>
+    // Galaxy Background Animation Engine
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    for(let i=0; i<200; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8,
+        alpha: Math.random(),
+        speed: Math.random() * 0.03 + 0.01
+      });
+    }
+
+    function drawGalaxy() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if(s.alpha > 1 || s.alpha < 0.2) s.speed = -s.speed;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(s.alpha)})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(drawGalaxy);
+    }
+    drawGalaxy();
+
+    // Triple-Tap 'X' / Cross Gesture Handler for Performance Menu
+    let xPressCount = 0;
+    let lastPressTime = 0;
+    const perfMenu = document.getElementById('perf-menu');
+
+    window.addEventListener('keydown', (e) => {
+      // Detect 'x', 'KeyX', or gamepad cross mapping equivalent
+      if (e.key === 'x' || e.key === 'X' || e.code === 'KeyX') {
+        let now = Date.now();
+        if (now - lastPressTime < 1000) {
+          xPressCount++;
+        } else {
+          xPressCount = 1;
+        }
+        lastPressTime = now;
+
+        if (xPressCount >= 3) {
+          // Toggle performance menu
+          if (perfMenu.style.display === 'flex') {
+            perfMenu.style.display = 'none';
+          } else {
+            perfMenu.style.display = 'flex';
+          }
+          xPressCount = 0;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
