@@ -1,0 +1,32 @@
+function zeroFill(number, width) {
+    width -= number.toString().length;
+    if (width > 0) {
+        let precision = 1;
+        return new Array(width + precision).join('0') + number;
+    }
+    return number + "";
+}
+
+function int64(low, hi) {
+    this.low = low >>> 0;
+    this.hi = hi >>> 0;
+    this.backing = null;
+    this.add32inplace = function (val) {
+        let new_lo = (this.low >>> 0) + (val & 0xffffffff);
+        this.low = new_lo >>> 0;
+        if (new_lo < this.low) {
+            this.hi = (this.hi + 1) >>> 0;
+        }
+    };
+    this.toString = function (radix = 16) {
+        if (this.hi === 0) {
+            return this.low.toString(radix);
+        }
+        const width = Math.ceil(32 / Math.log2(radix));
+        return this.hi.toString(radix) + zeroFill(this.low.toString(radix), width);
+    };
+    return this;
+}
+
+export { int64 };
+export default int64;
