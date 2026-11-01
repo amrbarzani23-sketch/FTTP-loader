@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PSBox Cloud Gaming</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000000;
+      overflow: hidden;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #b19cd9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #galaxy-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      background: radial-gradient(circle at center, #1b0c3f 0%, #05020a 60%, #000000 100%);
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    #state {
+      font-size: 22px;
+      font-weight: bold;
+      color: #7fd0a0;
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(127, 208, 160, 0.5);
+    }
+
+    #out {
+      font-size: 16px;
+      color: #d8b4fe;
+      margin-top: 5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    #ps4-notification {
+      position: fixed;
+      top: 35px;
+      left: -480px;
+      background: #ffffff;
+      color: #000000;
+      width: 370px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-radius: 3px;
+      transition: left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .notif-icon {
+      background: #003791;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 2px;
+    }
+    .notif-text h3 {
+      margin: 0 0 3px 0;
+      font-size: 15px;
+      color: #111111;
+      font-weight: bold;
+    }
+    .notif-text p {
+      margin: 0;
+      font-size: 13px;
+      color: #555555;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="galaxy-canvas"></canvas>
+
+  <div id="ps4-notification">
+    <div class="notif-icon">PS</div>
+    <div class="notif-text">
+      <h3>GoldHEN v2.4b18.12 loaded!</h3>
+      <p>Coded by SISTR0</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="state">Initializing PSBox Environment...</div>
+    <div id="out">Establishing ~30ms Cloud Pipeline</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    for(let i=0; i<220; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8,
+        alpha: Math.random(),
+        speed: Math.random() * 0.02 + 0.005
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if(s.alpha > 1 || s.alpha < 0.2) s.speed = -s.speed;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(s.alpha)})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    window.onload = function() {
+      setTimeout(function() {
+        document.getElementById('state').innerText = "Locking Network Buffers & Sockets...";
+      }, 1200);
+
+      setTimeout(function() {
+        document.getElementById('state').innerText = "GoldHEN MS Boost Active!";
+        document.getElementById('out').innerText = "Launching Xbox Cloud Stream...";
+        document.getElementById('ps4-notification').style.left = "20px";
+      }, 2800);
+
+      setTimeout(function() {
+        window.location.href = "https://www.xbox.com/play";
+      }, 5000);
+    };
+  </script>
+</body>
+</html>
