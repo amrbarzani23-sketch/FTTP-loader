@@ -1,0 +1,13 @@
+export const DRAIN_COUNT = 512;
+export const AUTO_RETRY_DELAY_MS = 50;
+export const K = 2;
+export const DUPLICATE_INDEX = 1;
+export const CONTROL_INDEX = 0xffff;
+export const CONTROL_CONTROL = -64000;
+export const BIGINT_BUCKETS = K - 1;
+export const FILLER_OBJECTS = 0xfffe, K;
+export const EXPECTED_LENGTH = 0x50001;
+export const CELL_BYTES = 0x20;
+export const FUNCTION_BYTES = 30;
+export const NATIVE_EXECUTABLE_BYTES = 40;
+export const HOLDER_BYTES = 40;
