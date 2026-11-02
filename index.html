@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS4 Host Launcher</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 { color: #0070d1; }
+    p { color: #aaaaaa; }
+    .card {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 450px;
+      margin: 20px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #2b2b2b;
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+    }
+    .btn {
+      background-color: #0070d1;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background-color: #0056a3; }
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>PS4 Host Launcher</h1>
+  <p>Send Payload via GoldHEN Server</p>
+
+  <div class="card">
+    <label for="ip">PS4 IP Address:</label><br>
+    <input type="text" id="ip" placeholder="192.168.1.X"><br>
+    
+    <label for="port">Payload Loader Port:</label><br>
+    <input type="text" id="port" value="9090"><br>
+
+    <button class="btn" onclick="sendDummyPayload()">Send Test Payload</button>
+    <div id="status">Status: Ready</div>
+  </div>
+
+  <script>
+    document.getElementById('ip').value = localStorage.getItem('ps4_ip') || '';
+
+    function sendDummyPayload() {
+      const ip = document.getElementById('ip').value.trim();
+      const port = document.getElementById('port').value.trim();
+      const statusDiv = document.getElementById('status');
+
+      if (!ip) {
+        statusDiv.style.color = '#ff5555';
+        statusDiv.innerText = 'Error: Enter your PS4 IP Address!';
+        return;
+      }
+
+      localStorage.setItem('ps4_ip', ip);
+      statusDiv.style.color = '#e6a100';
+      statusDiv.innerText = 'Sending connection to PS4...';
+
+      // Creating a small dummy buffer array to test connection handshake
+      const buffer = new Uint8Array([0x90, 0x90, 0x90, 0x90]);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `http://${ip}:${port}/`, true);
+      xhr.onload = function() {
+        statusDiv.style.color = '#55ff55';
+        statusDiv.innerText = 'Connected & Sent to PS4 Successfully!';
+      };
+      xhr.onerror = function() {
+        statusDiv.style.color = '#ff5555';
+        statusDiv.innerText = 'Connection Failed! Check IP & ensure Bin Server is on.';
+      };
+      xhr.send(buffer);
+    }
+  </script>
+</body>
+</html>
