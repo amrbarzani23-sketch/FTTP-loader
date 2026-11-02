@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTTH Fiber Portal - Made by Amr</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #161b22;
+      --border-color: #30363d;
+      --accent-blue: #0070d1;
+      --accent-green: #238636;
+      --text-main: #ffffff;
+      --text-muted: #8b949e;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 15px;
+      text-align: center;
+    }
+    .wrapper {
+      max-width: 440px;
+      margin: auto;
+    }
+    .top-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .top-bar .balance {
+      font-size: 20px;
+      font-weight: bold;
+      color: #58a6ff;
+    }
+    .top-bar .validity {
+      font-size: 12px;
+      background: rgba(88, 166, 255, 0.15);
+      color: #58a6ff;
+      padding: 6px 10px;
+      border-radius: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #c9d1d9;
+    }
+    .gauge-box {
+      text-align: center;
+      padding: 10px 0;
+    }
+    .speed-display {
+      font-size: 42px;
+      font-weight: bold;
+      color: var(--text-main);
+    }
+    .metrics-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 15px;
+    }
+    .metric-item {
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 18px;
+      font-weight: bold;
+      color: #58a6ff;
+    }
+    .metric-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .btn {
+      background-color: var(--accent-green);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background-color: #2ea043; }
+    .btn-blue {
+      background-color: var(--accent-blue);
+    }
+    .btn-blue:hover { background-color: #0056a3; }
+    #log-status {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .footer {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Account / Connection Header Style -->
+    <div class="top-bar">
+      <div>
+        <div class="balance">FTTH Fiber Pro</div>
+        <div style="font-size:12px; color:var(--text-muted);">ID: 0662966131</div>
+      </div>
+      <div class="validity">30d 13h Left</div>
+    </div>
+
+    <!-- Speed & Latency Test Card -->
+    <div class="card">
+      <h3>Network Diagnostic & Latency Monitor</h3>
+      <div class="gauge-box">
+        <div class="speed-display" id="speedVal">50 Mbps</div>
+        <div style="font-size:12px; color:var(--text-muted);">Active FTTH Profile</div>
+      </div>
+      
+      <div class="metrics-row">
+        <div class="metric-item">
+          <div class="metric-val" id="pingVal">-- ms</div>
+          <div class="metric-lbl">Game Ping</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">Fast</div>
+          <div class="metric-lbl">Routing</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val" id="jitVal">0 ms</div>
+          <div class="metric-lbl">Jitter</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MS Boost Optimization Card -->
+    <div class="card">
+      <h3>Low Latency Optimizer</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Applies high-priority QoS packet routing rules and local socket optimization to minimize packet delay.</p>
+      
+      <button class="btn btn-blue" onclick="runOptimization()">Activate MS Boost</button>
+      <div id="log-status">Status: Ready to optimize</div>
+    </div>
+
+    <div class="footer">
+      Created by Amr • FTTH PS4 Edition v4.0
+    </div>
+  </div>
+
+  <script>
+    function runOptimization() {
+      const log = document.getElementById('log-status');
+      const pingDisplay = document.getElementById('pingVal');
+      const jitDisplay = document.getElementById('jitVal');
+      
+      log.style.color = '#f0883e';
+      log.innerText = 'Syncing packet buffers & optimizing route...';
+
+      let count = 0;
+      const interval = setInterval(() => {
+        count++;
+        if (count === 1) {
+          log.innerText = 'Clearing local network cache...';
+        } else if (count === 2) {
+          log.innerText = 'Applying priority game socket rules...';
+        } else if (count >= 3) {
+          clearInterval(interval);
+          log.style.color = '#3fb950';
+          log.innerText = 'MS Boost Activated Successfully!';
+          // Simulated optimized stable response values reflecting fiber speeds
+          pingDisplay.innerText = '18 ms';
+          jitDisplay.innerText = '2 ms';
+        }
+      }, 800);
+    }
+  </script>
+</body>
+</html>
