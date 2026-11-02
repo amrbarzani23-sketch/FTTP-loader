@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS4 Auto Payload Launcher</title>
+  <style>
+    body { background: #121212; color: #fff; font-family: sans-serif; text-align: center; padding: 40px; }
+    h1 { color: #0070d1; }
+    .status-card { background: #1e1e1e; border: 1px solid #333; padding: 25px; border-radius: 12px; max-width: 400px; margin: 20px auto; }
+    #log { font-weight: bold; margin-top: 15px; font-size: 18px; color: #0070d1; }
+  </style>
+</head>
+<body>
+
+  <h1>PS4 Auto Payload Host</h1>
+  <div class="status-card">
+    <p>Status:</p>
+    <div id="log">Initializing Server Connection...</div>
+  </div>
+
+  <script>
+    // Automatically triggers payload loading to local console on port 9090
+    window.onload = function() {
+      const statusDiv = document.getElementById('log');
+      statusDiv.innerText = 'Connecting to GoldHEN Bin Server...';
+
+      // Standard test buffer payload
+      const buffer = new Uint8Array([0x90, 0x90, 0x90, 0x90]);
+
+      // Connect to local console directly on PS4
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://127.0.0.1:9090/', true);
+      
+      xhr.onload = function() {
+        statusDiv.style.color = '#55ff55';
+        statusDiv.innerText = 'SUCCESS! Payload Sent to PS4.';
+      };
+
+      xhr.onerror = function() {
+        statusDiv.style.color = '#ff5555';
+        statusDiv.innerText = 'FAILED! Enable Bin Server in GoldHEN Settings.';
+      };
+
+      xhr.send(buffer);
+    };
+  </script>
+</body>
+</html>
